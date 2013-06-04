@@ -1,0 +1,13 @@
+RewriteCond %{HTTP_HOST} ^(netfortaleza\.com\.br)(:80)? [NC]
+RewriteRule ^(.*) http://www.netfortaleza.com.br/$1 [R=301,L]
+
+DirectoryIndex index.php
+RewriteEngine On
+RewriteBase /
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} !^/index.php
+RewriteCond %{REQUEST_URI} (/|\.php|\.html|\.htm|\.feed|\.pdf|\.raw|/[^.]*)$  [NC]
+RewriteRule ^(.*)$ index.php/$1 [L]
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization},L]
