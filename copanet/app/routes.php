@@ -11,20 +11,28 @@
 |
 */
 
-/** HOME */
-Route::get('/', function() {
-    return View::make('hello');
+/** 404 Page */
+App::missing(function($exception)
+{
+    if(!Auth::user()) {
+        return Response::view('errors.404', array(), 404);
+    }
 });
-/** LOGIN */
+
+/** Home */
+Route::get('/', array('as' => 'home', function() {
+    return View::make('frontend.home');
+}));
+/** Login */
 Route::group(array('before' => 'logged'), function () {
-    /** ADMIN-BASE */
+    /** Admin base */
     Route::get('admin', function () {
         return Redirect::route('login');
     });
 
     Route::get('login', array('as' => 'login', function()
     {
-        return View::make('login');
+        return View::make('admin.login');
     }));
 
     Route::post('login', array('before' => 'csrf', function ()
@@ -41,22 +49,24 @@ Route::group(array('before' => 'logged'), function () {
     }));
 });
 
-/** ADMIN SAFE GROUP */
+/** Admin safe group */
 Route::group(array('before' => 'auth', 'prefix' => 'admin'), function () {
 
-    /** LOGOUT */
-    Route::get('logout', function ()
+    /** Logout */
+    Route::get('logout', array('as' => 'logout', function ()
     {
         if(Auth::check()){
             Auth::logout();
         }
         return Redirect::to('login');
-    });
+    }));
 
-    /** POSTS RESOURCE */
+    /** Posts Resource */
     Route::resource('posts', 'PostsController');
+    /** Departamento Resource */
+    Route::resource('departamento', 'DepartamentosController');
 
-    /** ADMIN DASHBOARD */
+    /** Admin Dashboard */
     Route::get('dashboard', array('as' => 'dashboard', 'before' => 'auth', function ()
     {
         return View::make('admin.dashboard');

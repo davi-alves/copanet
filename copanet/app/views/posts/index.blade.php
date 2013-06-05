@@ -1,4 +1,4 @@
-@extends('layouts.backend.master')
+@extends('layouts.admin.master')
 
 @section('content')
   <a href="{{ route('admin.posts.create') }}" class="btn btn-primary">Adicionar Novo</a>

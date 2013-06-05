@@ -1,6 +1,3 @@
-RewriteCond %{HTTP_HOST} ^(netfortaleza\.com\.br)(:80)? [NC]
-RewriteRule ^(.*) http://www.netfortaleza.com.br/$1 [R=301,L]
-
 DirectoryIndex index.php
 RewriteEngine On
 RewriteBase /

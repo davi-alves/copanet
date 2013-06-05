@@ -1,8 +1,8 @@
 <IfModule mod_rewrite.c>
-	Options -MultiViews
-	RewriteEngine On
-    RewriteBase /laravel-study/
+  Options -MultiViews
+  RewriteEngine On
+  RewriteBase /copanet/
 
-	RewriteCond %{REQUEST_FILENAME} !-f
-	RewriteRule ^ index.php [L]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteRule ^ index.php [L]
 </IfModule>

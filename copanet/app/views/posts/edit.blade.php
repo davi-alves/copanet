@@ -1,4 +1,4 @@
-@extends('layouts.backend.master')
+@extends('layouts.admin.master')
 
 @section('content')
   {{ Form::model($entity, array('route' => array('admin.posts.update', $entity->id),

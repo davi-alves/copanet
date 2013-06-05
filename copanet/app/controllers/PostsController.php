@@ -1,6 +1,7 @@
 <?php
 
-class PostsController extends BaseController {
+class PostsController extends BaseController
+{
 
     protected $title = 'Posts';
 

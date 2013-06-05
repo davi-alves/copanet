@@ -1,0 +1,54 @@
+/*
+ * Geral
+ */
+body { background: url("../img/bg.gif") 0 0 no-repeat; line-height: normal; }
+
+/*
+ * ****************************************************************************************************
+ */
+
+/*
+ * Topo
+ */
+header { background: url("../img/barratopo.gif") top center no-repeat; }
+header h1 { margin: 35px 0 0 0px; }
+header p { background:url("../img/pbg.png") 10px 0 no-repeat; color: #2f424f; font-size: 33px; font-weight: bold; line-height: normal; margin: 105px 0 0 0px; padding: 0px 10px 5px 0px; text-align: right; text-indent: -3px; width: 435px; }
+/*
+ * ****************************************************************************************************
+ */
+
+/*
+ * Meio
+ */
+#main {  }
+#main p.descricao { color: #fff; font-size: 44px; font-weight: 600; margin: 20px auto; text-align: center; text-shadow: 1px 2px 1px #000; }
+
+#main .departamentos-times { margin: 0px; }
+#main .departamentos-times .box { background: #fff; border-radius: 10px; margin-bottom: 30px; margin-top: 30px; }
+#main .departamentos-times .box.nomg { margin-left: 0px; }
+#main .departamentos-times .box .artilheiro { background: #f5f5f5; height: 57px; margin: 10px auto; padding: 10px; position: relative; width: 93%; }
+#main .departamentos-times .box .artilheiro p { color: #767676; float: left; font-size: 18px; font-weight: bold; }
+#main .departamentos-times .box .artilheiro p.name { color: #2f424f; clear: both; font-size: 24px; width: 80%; }
+#main .departamentos-times .box .artilheiro p.name span { color: #af6a00; font-size: 18px; margin: 0 0 0 5px; }
+#main .departamentos-times .box .artilheiro .img { background: url("../img/brasao.png") 0 0 no-repeat; height: 130px; padding: 23px 0 0 32px; position: absolute; right: -25px; top: -25px; width: 115px; }
+#main .departamentos-times .box .departamento .gols { background: #f8aa33; margin: 20px auto; position: relative; width: 35%; }
+#main .departamentos-times .box .departamento .gols p strong { color: #fff; display: block; font-size: 66px; text-align: center; }
+#main .departamentos-times .box .departamento .gols p { color: #fff; font-size: 45px; font-weight: normal; text-align: center; text-transform: uppercase; }
+#main .departamentos-times .box .departamento .gols .carret { background: url("../img/carret.gif") 0 0 no-repeat; height: 17px; position: absolute; right: 44%; top: 99%; width: 20px; }
+#main .departamentos-times .box .departamento > p { color: #2f424f; font-size: 30px; font-weight: bold; text-align: center; }
+
+#main .departamentos-times .box .times ul { list-style: none; margin: 0px; padding: 0px; }
+#main .departamentos-times .box .times ul li:nth-child(2n+1) { background: #f0f0f0; }
+#main .departamentos-times .box .times ul li p { color: #2f424f; font-size: 24px; margin: 0px; padding: 10px; }
+#main .departamentos-times .box .times ul li p span { color: #af6a00; float: right; font-size: 18px; font-weight: bold; }
+
+/*
+ * ****************************************************************************************************
+ */
+
+/*
+ * Rodape
+ */
+footer { background: #a0ef00; border-top: solid 20px #1d510c; margin: 10px 0 0 0; padding: 20px 0 20px 0px; }
+footer p { color: #2f424f; font-size: 15px; font-weight: bold; margin: 20px 0 0 0px; text-shadow: 1px 2px 1px #fff; text-align: right; width: 305px; }
+footer p a { color: #2f424f; }

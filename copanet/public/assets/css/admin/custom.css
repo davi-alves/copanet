@@ -1,0 +1,12 @@
+/* Widget Modal Form */
+#indexModalForm .form-horizontal .control-label { width: 70px;}
+#indexModalForm .form-horizontal .controls{ margin-left: 100px;}
+.modal-large{width: 1160px; margin: -240px 0 0 -580px;overflow: hidden;}
+.modal-crop{width: 1160px;margin: -300px 0 0 -580px;overflow: hidden;}
+.modal-crop .modal-body{overflow: auto; padding: 0;max-height: 500px; }
+.modal-crop .modal-body .span5{margin: 0;overflow: visible;}
+.modal-crop .modal-footer{overflow: hidden;}
+.modal-crop div.span5 {width: 100%; overflow: scroll;}
+/* Modal form */
+.modal-form ul.images{list-style: none;margin-left: 68px;}
+img.thumbnail {width: 108px;}

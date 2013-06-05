@@ -9,13 +9,13 @@ class UsersTableSeeder extends Seeder {
 
         $users = array(
             array(
-                  'name' => 'Davi Alves',
-                  'email' => 'davi@email.com',
-                  'username' => 'davi',
-                  'password' => Hash::make('123456'),
-                  'created_at' => new DateTime,
-                  'updated_at' => new DateTime
-              ),
+                'nome' => 'Index Digital',
+                'email' => 'teste@indexdigital.com.br',
+                'username' => 'index',
+                'password' => Hash::make('idx32611908'),
+                'created_at' => new DateTime,
+                'updated_at' => new DateTime
+            ),
         );
 
         // Uncomment the below to run the seeder

@@ -26,7 +26,7 @@ return array(
   |
   */
 
-  'url' => 'http://localhost/laravel-study',
+  'url' => 'http://netfortaleza.local/copanet/',
 
   /*
   |--------------------------------------------------------------------------
