@@ -1,4 +1,4 @@
-define ['jquery', 'index', 'jquery.migrate', 'fancybox', 'fileupload', 'form'], ($, Index)->
+define ['jquery', 'index', 'holder', 'jquery.migrate', 'fancybox', 'fileupload', 'form', 'jquery.jcrop'], ($, Index, Holder)->
   Index = Index || {}
   Index.Admin = ( (Admin) ->
     Admin.manage = ( ->
@@ -45,6 +45,11 @@ define ['jquery', 'index', 'jquery.migrate', 'fancybox', 'fileupload', 'form'], 
           __formModal = modal
           $(__formModal).on 'hidden', ->
             $(@).remove('.modal')
+
+          if $(__formModal).find(__fileUploadThumbnail).attr('src') == undefined
+            Holder.run(
+              images: $(__formModal).find(__fileUploadThumbnail)[0]
+            )
 
           _triggerFileUpload()
           _triggerAjaxForm()
@@ -100,26 +105,26 @@ define ['jquery', 'index', 'jquery.migrate', 'fancybox', 'fileupload', 'form'], 
         return Index.modals.showAlert(data.message) if data.success == false
 
         modal = $(Index.modals.widgetCrop)
-        $('#modalBody', modal).html data.result.body
-        $('#modalLabel', modal).html data.result.label
+        $('#modalBody', modal).html data.form
+        $('#modalLabel', modal).html 'Crop'
         __cropModal = modal
 
-        $(__cropModal).find('.max_height').val crop_height
-        $(__cropModal).find('.max_width').val crop_width
+        $(__cropModal).find('.max_height').val max_height
+        $(__cropModal).find('.max_width').val max_width
 
         $(__cropModal).find(__cropImage).Jcrop(
           onChange: _updateCropCoords
           onSelect: _updateCropCoords
-          aspectRatio: crop_width / crop_height
-          minSize: [crop_width, crop_height]
-          setSelect: [0, 0, crop_width, crop_height]
+          aspectRatio: max_width / max_height
+          minSize: [min_width, min_height]
+          setSelect: [0, 0, min_width, min_height]
         , ->
           $(__cropModal).modal()
           $(__cropModal).on 'hidden', ->
             $(@).remove('.modal')
         )
 
-        _showThumbnail data.result.image
+        _showThumbnail data.url
         _bindCropEvents()
 
         $(__cropModal).find(__cropForm).ajaxForm(
@@ -132,8 +137,8 @@ define ['jquery', 'index', 'jquery.migrate', 'fancybox', 'fileupload', 'form'], 
 
             $(__cropModal).modal('hide')
 
-            _showThumbnail data.result.image
-            $(__itemCurrent).find(__FileUploadHiddden).val data.result.image_path
+            _showThumbnail data.image
+            $(__itemCurrent).find(__FileUploadHiddden).val data.url
           error: ->
             $.unblockUI()
         )
@@ -151,6 +156,7 @@ define ['jquery', 'index', 'jquery.migrate', 'fancybox', 'fileupload', 'form'], 
         $(__cropModal).find('.h_sel').val coords.h
 
       _showThumbnail = (image) ->
+        console.log image
         time = new Date().getTime();
         $(__itemCurrent).find(__fileUploadThumbnail).attr 'src', image + '?' + time
 

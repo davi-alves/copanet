@@ -2,10 +2,10 @@
 
 define(['index', 'admin/manage'], function(Index) {
   Index = Index || {};
-  Index.Time = (function(Time, $) {
-    Time.manage = (function() {
+  Index.Artilheiro = (function(Artilheiro, $) {
+    Artilheiro.manage = (function() {
       var bindEvents, getTimes, __departamentSelect, __tableTBody;
-      __departamentSelect = '.departamento-select';
+      __departamentSelect = '.time-select';
       __tableTBody = '.table-tbody';
       getTimes = function(selected) {
         var url;
@@ -40,9 +40,9 @@ define(['index', 'admin/manage'], function(Index) {
         }
       };
     })();
-    return Time;
-  })(Index.Time || {}, jQuery);
+    return Artilheiro;
+  })(Index.Artilheiro || {}, jQuery);
   return jQuery(function() {
-    return Index.Time.manage.init();
+    return Index.Artilheiro.manage.init();
   });
 });

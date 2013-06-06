@@ -2,7 +2,7 @@
   {{ Form::open(array('route' => 'admin.time.store', 'class' => 'form-horizontal modal-form')) }}
     <div class="item">
       <div class="control-group">
-        {{ Form::label('departamento', 'Departamento', array('class' => 'control-label')) }}
+        {{ Form::label('departamento_id', 'Departamento', array('class' => 'control-label')) }}
 
         <div class="controls">
           {{ Form::select('departamento_id', array_slice($departamentos, 1, null, true), null, array( 'class' => 'input-xlarge')) }}

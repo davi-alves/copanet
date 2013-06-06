@@ -16,6 +16,14 @@ class UsersTableSeeder extends Seeder {
                 'created_at' => new DateTime,
                 'updated_at' => new DateTime
             ),
+            array(
+                'nome' => 'Net Fortaleza',
+                'email' => 'net@netfortaleza.com.br',
+                'username' => 'netfortaleza',
+                'password' => Hash::make('net2013'),
+                'created_at' => new DateTime,
+                'updated_at' => new DateTime
+            ),
         );
 
         // Uncomment the below to run the seeder

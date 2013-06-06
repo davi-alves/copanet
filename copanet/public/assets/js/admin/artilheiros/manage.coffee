@@ -1,9 +1,9 @@
 define ['index', 'admin/manage'], (Index) ->
   Index = Index || {}
-  Index.Time = ( (Time, $) ->
-    Time.manage = ( ->
+  Index.Artilheiro = ( (Artilheiro, $) ->
+    Artilheiro.manage = ( ->
       #- elements
-      __departamentSelect = '.departamento-select'
+      __departamentSelect = '.time-select'
       __tableTBody = '.table-tbody'
 
       getTimes = (selected) ->
@@ -33,10 +33,10 @@ define ['index', 'admin/manage'], (Index) ->
       }
     )()
 
-    Time
-  )(Index.Time || {}, jQuery)
+    Artilheiro
+  )(Index.Artilheiro || {}, jQuery)
 
   jQuery( ->
-    Index.Time.manage.init()
+    Index.Artilheiro.manage.init()
   )
 

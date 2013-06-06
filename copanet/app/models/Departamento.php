@@ -19,6 +19,15 @@ class Departamento extends Base
     }
 
     /**
+     * Get times collection
+     * @return Collection
+     */
+    public function gols()
+    {
+        return $this->hasOne('Gol');
+    }
+
+    /**
      * Invoked before a model is saved. Return false to abort the operation.
      *
      * @param bool    $forced Indicates whether the model is being saved forcefully

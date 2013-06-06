@@ -2,7 +2,7 @@
 
 @section('content')
   @include('artilheiros._partials.menu')
-  <select name="departamento" class="departamento-select">
+  <select name="time" class="time-select">
     @foreach($times as $key => $nome)
       <option value="{{ $key }}" data-url="{{ route('admin.artilheiro.time', $key) }}">
         {{ $nome }}
@@ -34,7 +34,7 @@
 @section('javascript')
   @parent
   <script>
-    Index.modules = ['admin/manage'];
+    Index.modules = ['admin/artilheiros/manage'];
   </script>
   {{ HTML::script('assets/js/require.min.js', array('data-main' => url('assets/js/backend'))) }}
 @stop

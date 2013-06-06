@@ -71,9 +71,15 @@ Route::group(array('before' => 'auth', 'prefix' => 'admin'), function () {
     /** Artilheiro Resource */
     Route::resource('artilheiro', 'ArtilheirosController', array('except' => array('show')));
     Route::get('artilheiro/time/{time}', array('as' => 'admin.artilheiro.time', 'uses' => 'ArtilheirosController@time'));
+    Route::post('artilheiro/foto', array('as' => 'admin.artilheiro.foto', 'uses' => 'ArtilheirosController@foto'));
+    /** Gol Routes */
+    Route::get('gol', array('as' => 'admin.gol.create', 'uses' => 'GolsController@add'));
+    Route::post('gol', array('as' => 'admin.gol.store', 'uses' => 'GolsController@save'));
+    Route::get('gol/times/{departamento}', array('as' => 'admin.gol.times', 'uses' => 'GolsController@times'));
+    Route::get('gol/artilheiros/{time}', array('as' => 'admin.gol.artilheiros', 'uses' => 'GolsController@artilheiros'));
 
     /** Admin Dashboard */
-    Route::get('dashboard', array('as' => 'dashboard', 'before' => 'auth', function ()
+    Route::get('dashboard', array('as' => 'dashboard', function ()
     {
         return View::make('admin.dashboard');
     }));
