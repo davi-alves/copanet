@@ -64,7 +64,13 @@ Route::group(array('before' => 'auth', 'prefix' => 'admin'), function () {
     /** Posts Resource */
     Route::resource('posts', 'PostsController');
     /** Departamento Resource */
-    Route::resource('departamento', 'DepartamentosController');
+    Route::resource('departamento', 'DepartamentosController', array('except' => array('show')));
+    /** Times Resource */
+    Route::resource('time', 'TimesController', array('except' => array('show')));
+    Route::get('time/departamento/{departamento}', array('as' => 'admin.time.departamento', 'uses' => 'TimesController@departamento'));
+    /** Artilheiro Resource */
+    Route::resource('artilheiro', 'ArtilheirosController', array('except' => array('show')));
+    Route::get('artilheiro/time/{time}', array('as' => 'admin.artilheiro.time', 'uses' => 'ArtilheirosController@time'));
 
     /** Admin Dashboard */
     Route::get('dashboard', array('as' => 'dashboard', 'before' => 'auth', function ()
@@ -72,3 +78,4 @@ Route::group(array('before' => 'auth', 'prefix' => 'admin'), function () {
         return View::make('admin.dashboard');
     }));
 });
+

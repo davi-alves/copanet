@@ -40,7 +40,7 @@
 @section('javascript')
   @parent
   <script>
-    Index.modules = ['admin/departamentos/main'];
+    Index.modules = ['admin/manage'];
   </script>
   {{ HTML::script('assets/js/require.min.js', array('data-main' => url('assets/js/backend'))) }}
 @stop

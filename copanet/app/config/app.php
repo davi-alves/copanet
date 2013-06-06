@@ -114,6 +114,7 @@ return array(
     'Illuminate\View\ViewServiceProvider',
     'Illuminate\Workbench\WorkbenchServiceProvider',
     'Way\Generators\GeneratorsServiceProvider',
+    'Services\Image\Uploader\Providers\UploadServiceProvider',
 
   ),
 
@@ -179,6 +180,7 @@ return array(
     'URL'             => 'Illuminate\Support\Facades\URL',
     'Validator'       => 'Illuminate\Support\Facades\Validator',
     'View'            => 'Illuminate\Support\Facades\View',
+    'Upload'          => 'Services\Image\Uploader\Facades\Upload',
 
   ),
 

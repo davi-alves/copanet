@@ -11,15 +11,15 @@
                     </a>
                 </li>
                 <li class="">
-                    <a href="{{ route('admin.posts.index') }}">
+                    <a href="{{ route('admin.time.index') }}">
                         <i class="icon-flag"></i>
                         Times
                     </a>
                 </li>
                 <li class="">
-                    <a href="{{ route('admin.posts.index') }}">
+                    <a href="{{ route('admin.artilheiro.index') }}">
                         <i class="icon-user"></i>
-                        Pessoas
+                        Artilheiros
                     </a>
                 </li>
             </ul>

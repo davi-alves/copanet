@@ -1,9 +1,9 @@
 <?php
 
-class DepartamentosController extends BaseController
+class ArtilheirosController extends BaseController
 {
 
-    protected $title = 'Departamentos';
+    protected $title = 'Artilheiros';
 
     /**
      * Display a listing of the resource.
@@ -12,8 +12,9 @@ class DepartamentosController extends BaseController
      */
     public function index()
     {
-        return View::make('departamentos.index')->with(array(
-            'entities' => Departamento::all(),
+        return View::make('artilheiros.index')->with(array(
+            'entities' => Artilheiro::all(),
+            'times' => $this->getTimesSelect(),
             'title' => $this->title
         ));
     }
@@ -25,7 +26,7 @@ class DepartamentosController extends BaseController
      */
     public function create()
     {
-        return View::make('departamentos.create');
+        return View::make('artilheiros.create')->with('times', $this->getTimesSelect());
     }
 
     /**
@@ -35,7 +36,13 @@ class DepartamentosController extends BaseController
      */
     public function store()
     {
-        $entity = new Departamento(Input::all());
+        if(!Time::find(Input::get('departamento_id'))) {
+            return Response::json(array(
+                'success' => false,
+                'messages' => 'Departamento não encontrado'
+            ));
+        }
+        $entity = new Time(Input::all());
         if(!$entity->save()){
             return Response::json(array(
                 'success' => false,
@@ -54,9 +61,22 @@ class DepartamentosController extends BaseController
      * @param  int  $id
      * @return Response
      */
-    public function show($id)
+    public function time($id)
     {
-        //
+        $html = '';
+        if($id <= 0) {
+            foreach (Artilheiro::all() as $time) {
+                $html .= View::make('artilheiros._partials.table_row')->with('entity', $time);
+            }
+        } else {
+            $departamento = Time::has('times')->find($id);
+            if($departamento) {
+                foreach ($departamento->times()->get() as $time) {
+                    $html .= View::make('artilheiros._partials.table_row')->with('entity', $time);
+                }
+            }
+        }
+        return $html;
     }
 
     /**
@@ -67,11 +87,11 @@ class DepartamentosController extends BaseController
      */
     public function edit($id)
     {
-        $entity = Departamento::find($id);
+        $entity = Artilheiro::find($id);
         if (!$entity) {
-            App::abort('Departamento não encontrado', 404);
+            App::abort('Time não encontrado', 404);
         }
-        return View::make('departamentos.edit')->with('entity', $entity);
+        return View::make('artilheiros.edit')->with(array('entity' => $entity, 'times' => $this->getTimesSelect()));
     }
 
     /**
@@ -82,11 +102,17 @@ class DepartamentosController extends BaseController
      */
     public function update($id)
     {
-        $entity = Departamento::find($id);
-        if (!$entity) {
+        if(!Time::find(Input::get('departamento_id'))) {
             return Response::json(array(
                 'success' => false,
                 'messages' => 'Departamento não encontrado'
+            ));
+        }
+        $entity = Artilheiro::find($id);
+        if (!$entity) {
+            return Response::json(array(
+                'success' => false,
+                'messages' => 'Time não encontrado'
             ));
         }
 
@@ -111,11 +137,11 @@ class DepartamentosController extends BaseController
      */
     public function destroy($id)
     {
-        $entity = Departamento::find($id);
+        $entity = Artilheiro::find($id);
         if(!$entity) {
             return Response::json(array(
                     'success' => false,
-                    'message' => 'Departamento não encontrado',
+                    'message' => 'Time não encontrado',
             ));
         }
 
@@ -129,6 +155,21 @@ class DepartamentosController extends BaseController
         return Response::json(array(
                 'success' => true,
         ));
+    }
+
+    /**
+     * Get times select array
+     * @return array
+     */
+    protected function getTimesSelect()
+    {
+        $times = Time::has('artilheiros')->get();
+        $select = array(0 => 'Todos');
+        foreach ($times as $time) {
+            $select[$time->id] = $time->nome;
+        }
+
+        return $select;
     }
 
 }

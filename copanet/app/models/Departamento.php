@@ -1,10 +1,22 @@
 <?php
 
-class Departamento extends Base {
-    protected $guarded = array();
+use Illuminate\Database\Eloquent\Collection;
+
+class Departamento extends Base
+{
+    protected $fillable = array('nome');
 
     public static $rules = array('nome' => 'required');
     public $timestamps = false;
+
+    /**
+     * Get times collection
+     * @return Collection
+     */
+    public function times()
+    {
+        return $this->hasMany('Time');
+    }
 
     /**
      * Invoked before a model is saved. Return false to abort the operation.
@@ -14,9 +26,9 @@ class Departamento extends Base {
      */
     protected function beforeSave( $forced = false )
     {
-        $slug = $this->_createAlias($this->titulo);
-        if($slug != $this->slug && Post::where('slug', $slug)->first()) {
-            throw new Exception("Slug já existe");
+        $slug = $this->_createAlias($this->nome);
+        if($slug != $this->slug && Departamento::where('slug', $slug)->first()) {
+            throw new Exception("Departamento já existe");
         }
         $this->slug = $slug;
 
