@@ -2,7 +2,8 @@
 
 class Time extends Base
 {
-    protected $fillable  = array('id', 'nome', 'departamento_id');
+    #protected $fillable  = array('id', 'nome', 'departamento_id');
+    protected $guarded = array();
 
     public static $rules = array('nome' => 'required', 'departamento_id' => 'required');
     public $timestamps = false;

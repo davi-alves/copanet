@@ -18,7 +18,7 @@
       </tr>
     </thead>
     <tbody class="table-tbody">
-        @if($entities)
+        @if($entities->count() > 0)
           @foreach($entities as $entity)
             @include('times._partials.table_row')
           @endforeach

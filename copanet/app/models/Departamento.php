@@ -4,7 +4,8 @@ use Illuminate\Database\Eloquent\Collection;
 
 class Departamento extends Base
 {
-    protected $fillable = array('nome');
+    #protected $fillable = array('nome');
+    protected $guarded = array();
 
     public static $rules = array('nome' => 'required');
     public $timestamps = false;

@@ -163,7 +163,7 @@ class TimesController extends BaseController
      */
     protected function getDepartamentoSelect()
     {
-        $departamentos = Departamento::has('times')->get();
+        $departamentos = Departamento::all();
         $select = array(0 => 'Todos');
         foreach ($departamentos as $departamento) {
             $select[$departamento->id] = $departamento->nome;
