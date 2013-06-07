@@ -25,7 +25,7 @@ define ['index', 'admin/manage'], (Index) ->
       bindEvents = ->
         # events
         $(__departamentSelect).bind 'change', ->
-          getTimes $(@).children('option:selected')
+          getTimes $(@).find('option:selected')
 
       {
       init: ->

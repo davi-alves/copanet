@@ -26,15 +26,8 @@ class GolsController extends BaseController
         if(!$artilheiro){
             return null;
         }
-        $this->saveProcedure($id);
 
-        return View::make('gols.edit')->with(array_merge(
-            array(
-                'gols' => $artilheiro->gols,
-                'artilheiro' => $artilheiro,
-            ),
-            $this->getSelects()
-        ));
+        return View::make('gols.edit')->with('artilheiro', $artilheiro);
     }
 
     /**
@@ -43,9 +36,9 @@ class GolsController extends BaseController
      * @param  int  $id
      * @return Response
      */
-    public function save($id)
+    public function save()
     {
-        $this->saveProcedure($id);
+        $this->saveProcedure();
     }
 
     public function times($id)
@@ -55,7 +48,7 @@ class GolsController extends BaseController
             return '';
         }
 
-        return View::make('gols._partials.select_options')->with('entities', $departamento->times);
+        return View::make('gols._partials.select_options')->with(array('entities' => $departamento->times, 'route' => 'admin.gol.artilheiros'));
     }
 
     public function artilheiros($id)
@@ -64,40 +57,51 @@ class GolsController extends BaseController
         if(!$time) {
             return '';
         }
-        return View::make('gols._partials.select_options')->with('entities', $time->artilheiros);
+        return View::make('gols._partials.select_options')->with(array('entities' => $time->artilheiros, 'route' => 'admin.gol.total'));
     }
 
-    protected function saveProcedure($id)
+    public function gols($id)
+    {
+        $gols = Gol::getGols($id);
+        $totalGols = ($gols) ? $gols->gols : 0;
+
+        return $totalGols;
+    }
+
+    protected function saveProcedure($artilheiro = 0)
     {
         $gols = Input::get('gols', 0);
-        $golsArtilheiro = $this->getGols($id);
+
+        $artilheiro = $artilheiro ? $artilheiro : Input::get('artilheiro_id');
+        $golsArtilheiro = Gol::getGols($artilheiro);
         if(!$golsArtilheiro) {
-            $golsArtilheiro = new Gol(array('artilheiro_id' => $id, 'gols' => 0));
-            $golsArtilheiro->save();
+            $golsArtilheiro = new Gol(array('artilheiro_id' => $artilheiro, 'gols' => 0));
         }
         $golsArtilheiro->gols += $gols;
+        if($golsArtilheiro->gols < 0) {
+            $golsArtilheiro->gols = 0;
+        }
         $golsArtilheiro->save();
 
-        $golsTime = $this->getGols(null, $golsArtilheiro->artilheiro->time->id);
+        $golsTime = Gol::getGols(null, $golsArtilheiro->artilheiro->time->id);
         if(!$golsTime) {
             $golsTime = new Gol(array('time_id' => $golsArtilheiro->artilheiro->time->id, 'gols' => 0));
-            $golsTime->save();
         }
         $golsTime->gols += $gols;
+        if($golsTime->gols < 0) {
+            $golsTime->gols = 0;
+        }
         $golsTime->save();
 
-        $golsDepartamento = $this->getGols(null, null, $golsTime->time->departamento->id);
+        $golsDepartamento = Gol::getGols(null, null, $golsTime->time->departamento->id);
         if(!$golsDepartamento) {
             $golsDepartamento = new Gol(array('departamento_id' => $golsTime->time->departamento->id, 'gols' => 0));
-            $golsDepartamento->save();
         }
         $golsDepartamento->gols += $gols;
+        if($golsDepartamento->gols < 0) {
+            $golsDepartamento->gols = 0;
+        }
         $golsDepartamento->save();
-    }
-
-    protected function getGols($artilheiro = null, $time = null, $departamento = null)
-    {
-        return Gol::where('artilheiro_id', $artilheiro)->where('time_id', $time)->where('departamento_id', $departamento)->first();
     }
 
     protected function getSelects()

@@ -46,7 +46,8 @@ define ['jquery', 'index', 'holder', 'jquery.migrate', 'fancybox', 'fileupload',
           $(__formModal).on 'hidden', ->
             $(@).remove('.modal')
 
-          if $(__formModal).find(__fileUploadThumbnail).attr('src') == undefined
+          image = $(__formModal).find(__fileUploadThumbnail)
+          if image.length > 0 && image.attr('src') == undefined
             Holder.run(
               images: $(__formModal).find(__fileUploadThumbnail)[0]
             )

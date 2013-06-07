@@ -21,8 +21,9 @@ App::missing(function($exception)
 
 /** Home */
 Route::get('/', array('as' => 'home', function() {
-    return View::make('frontend.home');
+    return View::make('frontend.home')->with('departamentos', Departamento::all());
 }));
+
 /** Login */
 Route::group(array('before' => 'logged'), function () {
     /** Admin base */
@@ -74,9 +75,11 @@ Route::group(array('before' => 'auth', 'prefix' => 'admin'), function () {
     Route::post('artilheiro/foto', array('as' => 'admin.artilheiro.foto', 'uses' => 'ArtilheirosController@foto'));
     /** Gol Routes */
     Route::get('gol', array('as' => 'admin.gol.create', 'uses' => 'GolsController@add'));
+    Route::get('gol/{artilheiro}', array('as' => 'admin.gol.edit', 'uses' => 'GolsController@edit'));
     Route::post('gol', array('as' => 'admin.gol.store', 'uses' => 'GolsController@save'));
     Route::get('gol/times/{departamento}', array('as' => 'admin.gol.times', 'uses' => 'GolsController@times'));
     Route::get('gol/artilheiros/{time}', array('as' => 'admin.gol.artilheiros', 'uses' => 'GolsController@artilheiros'));
+    Route::get('gol/total/{artilheiro}', array('as' => 'admin.gol.total', 'uses' => 'GolsController@gols'));
 
     /** Admin Dashboard */
     Route::get('dashboard', array('as' => 'dashboard', function ()

@@ -25,4 +25,19 @@ class Artilheiro extends Base
     {
         return $this->hasOne('Gol');
     }
+
+    public static function getArtilheiroFromDepartamento($departamento)
+    {
+        $times = DB::table('artilheiros')
+            ->select('artilheiros.*', 'gols.gols')
+            ->join('times', 'times.id', '=', 'artilheiros.time_id')
+            ->join('gols', 'gols.artilheiro_id', '=', 'artilheiros.id')
+            ->where('times.departamento_id', $departamento)
+            ->where('gols.gols', '>', '0')
+            ->groupBy('times.id')
+            ->orderBy('gols.gols', 'DESC')
+            ->orderBy('artilheiros.nome', 'ASC')->first();
+
+        return $times ? $times : array();
+    }
 }

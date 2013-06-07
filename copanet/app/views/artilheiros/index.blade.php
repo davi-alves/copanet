@@ -3,17 +3,23 @@
 @section('content')
   @include('artilheiros._partials.menu')
   <select name="time" class="time-select">
-    @foreach($times as $key => $nome)
-      <option value="{{ $key }}" data-url="{{ route('admin.artilheiro.time', $key) }}">
-        {{ $nome }}
-      </option>
+    <option value="0" data-url="{{ route('admin.artilheiro.time', 0) }}">Selecione</option>
+    @foreach($times as $departamento => $time)
+      <optgroup label="{{ $departamento }}">
+        @foreach($time as $key => $nome)
+          <option value="{{ $key }}" data-url="{{ route('admin.artilheiro.time', $key) }}">
+            {{ $nome }}
+          </option>
+        @endforeach
+      </optgroup>
     @endforeach
   </select>
   <table class="table">
     <thead>
       <tr>
         <th width="40%">Nome</th>
-        <th width="40%">Time</th>
+        <th width="30%">Time</th>
+        <th width="5%">Gols</th>
         <th>&nbsp;</th>
       </tr>
     </thead>
@@ -24,7 +30,7 @@
           @endforeach
         @else
           <tr>
-            <td colspan="3">Nenhum artilheiro cadastrado.</td>
+            <td colspan="4">Nenhum artilheiro cadastrado.</td>
           </tr>
         @endif
     </tbody>
@@ -34,7 +40,7 @@
 @section('javascript')
   @parent
   <script>
-    Index.modules = ['admin/artilheiros/manage'];
+    Index.modules = ['admin/artilheiros/manage', 'admin/gols/manage'];
   </script>
   {{ HTML::script('assets/js/require.min.js', array('data-main' => url('assets/js/backend'))) }}
 @stop

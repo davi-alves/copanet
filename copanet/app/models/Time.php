@@ -34,6 +34,18 @@ class Time extends Base
         return $this->hasOne('Gol');
     }
 
+    public static function getTimesWithGolsByDepartamento($departamento)
+    {
+        $times = DB::table('times')
+            ->join('gols', 'times.id', '=', 'gols.time_id')
+            ->select('times.*', 'gols.gols')
+            ->where('times.departamento_id', $departamento)
+            ->where('gols.gols', '>', '0')
+            ->orderBy('gols.gols', 'ASC')->get();
+
+        return $times ? $times : array();
+    }
+
     /**
      * Invoked before a model is saved. Return false to abort the operation.
      *

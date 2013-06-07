@@ -2,7 +2,8 @@
 
 @section('content')
   <br><br>
-  {{ link_to_route('admin.gol.create', 'Adicionar Gols!', null, array('class' => 'btn-add btn btn-large btn-success')) }}
+  {{ link_to_route('admin.gol.create', '&nbsp;&nbsp;&nbsp;&nbsp;Gols!&nbsp;&nbsp;&nbsp;&nbsp;',
+    null, array('class' => 'btn-add-gols btn btn-large btn-success')) }}
 @stop
 
 @section('javascript')

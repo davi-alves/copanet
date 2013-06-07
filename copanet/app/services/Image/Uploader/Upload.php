@@ -43,6 +43,15 @@ class Upload
         return $url;
     }
 
+    public function getPathFromUrl($url)
+    {
+        $baseUrl = $this->getBaseUploadUrl();
+        $basePath = $this->getBaseUploadPath();
+        $path = str_replace($baseUrl, $basePath, $url);
+
+        return $path;
+    }
+
     /**
      * @return string
      */

@@ -6,7 +6,7 @@
         {{ Form::label('time_id', 'Time', array('class' => 'control-label')) }}
 
         <div class="controls">
-          {{ Form::select('time_id', array_slice($times, 1, null, true), null, array( 'class' => 'input-xlarge')) }}
+          {{ Form::select('time_id', $times, null, array( 'class' => 'input-xlarge')) }}
         </div>
       </div>
       <div class="control-group">
@@ -23,7 +23,7 @@
 
         <div class="controls">
           <input type="hidden" name="foto" id="foto" class="fileupload-hidden"
-                   value="">
+                   value="{{ $entity->foto }}">
           <span class="btn btn-success fileinput-button fileupload-button" id="fileupload">
             <span><i class="icon-plus icon-white"></i>Adicionar imagem</span>
           </span>

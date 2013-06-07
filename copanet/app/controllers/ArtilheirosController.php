@@ -14,7 +14,7 @@ class ArtilheirosController extends BaseController
     {
         return View::make('artilheiros.index')->with(array(
             'entities' => Artilheiro::all(),
-            'times' => $this->getTimesSelect(),
+            'times' => $this->getTimesSelect(true),
             'title' => $this->title
         ));
     }
@@ -125,7 +125,8 @@ class ArtilheirosController extends BaseController
      */
     public function update($id)
     {
-        if(!Time::find(Input::get('time_id'))) {
+        $time = Time::find(Input::get('time_id'));
+        if(!$time) {
             return Response::json(array(
                 'success' => false,
                 'messages' => 'Time não encontrado'
@@ -139,6 +140,7 @@ class ArtilheirosController extends BaseController
             ));
         }
 
+        $this->updateGols($entity, $time);
         $entity->fill(Input::all());
         if(!$entity->save()){
             return Response::json(array(
@@ -184,12 +186,17 @@ class ArtilheirosController extends BaseController
      * Get times select array
      * @return array
      */
-    protected function getTimesSelect()
+    protected function getTimesSelect($filtered = false)
     {
-        $times = Time::has('artilheiros')->get();
-        $select = array(0 => 'Todos');
-        foreach ($times as $time) {
-            $select[$time->id] = $time->nome;
+        $departamentos = Departamento::has('times')->get();
+        $select = array();
+        foreach ($departamentos as $departamento) {
+            foreach ($departamento->times as $time) {
+                if($filtered && $time->hasMany('artilheiro')->count() == 0) {
+                    continue;
+                }
+                $select[$departamento->nome][$time->id] = $time->nome;
+            }
         }
 
         return $select;
@@ -258,6 +265,53 @@ class ArtilheirosController extends BaseController
         }
 
         return $imageResource;
+    }
+
+    public function updateGols($artilheiro, $newTime)
+    {
+        if($artilheiro->time_id == Input::get('time_id')) {
+            return;
+        }
+        $gols = $artilheiro->gols->gols;
+        if ($gols <= 0) {
+            return;
+        }
+
+        $golsOldTime = Gol::getGols(null, $artilheiro->time_id);
+        if($golsOldTime) {
+            $golsOldTime->gols -= $gols;
+            if($golsOldTime->gols < 0) {
+                $golsOldTime->gols = 0;
+            }
+            $golsOldTime->save();
+        }
+
+        $golsNewTime = Gol::getGols(null, $newTime->id);
+        if (!$golsNewTime) {
+            $golsNewTime = new Gol(array('time_id' => $newTime->id, 'gols' => 0));
+        }
+        $golsNewTime->gols += $gols;
+        $golsNewTime->save();
+
+        if ($artilheiro->time->departamento_id == $newTime->departamento_id) {
+            return;
+        }
+
+        $golsOldDepartamento = Gol::getGols(null, null, $artilheiro->time->departamento_id);
+        if($golsOldDepartamento) {
+            $golsOldDepartamento->gols -= $gols;
+            if($golsOldDepartamento->gols < 0) {
+                $golsOldDepartamento->gols = 0;
+            }
+            $golsOldDepartamento->save();
+        }
+
+        $golsNewDepartamento = Gol::getGols(null, null, $newTime->departamento_id);
+        if (!$golsNewDepartamento) {
+            $golsNewDepartamento = new Gol(array('departamento_id' => $newTime->departamento_id, 'gols' => 0));
+        }
+        $golsNewDepartamento->gols += $gols;
+        $golsNewDepartamento->save();
     }
 
 }
