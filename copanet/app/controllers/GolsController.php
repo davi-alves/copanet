@@ -11,7 +11,7 @@ class GolsController extends BaseController
      */
     public function add()
     {
-        return View::make('gols.create')->with('departamentos', Departamento::all());
+        return View::make('gols.create')->with('departamentos', Departamento::has('times')->get());
     }
 
     /**
@@ -43,17 +43,18 @@ class GolsController extends BaseController
 
     public function times($id)
     {
-        $departamento = Departamento::find($id);
+        $departamento = Departamento::has('times')->find($id);
         if(!$departamento) {
             return '';
         }
+        $times = $departamento->times()->has('artilheiros')->get();
 
-        return View::make('gols._partials.select_options')->with(array('entities' => $departamento->times, 'route' => 'admin.gol.artilheiros'));
+        return View::make('gols._partials.select_options')->with(array('entities' => $times, 'route' => 'admin.gol.artilheiros'));
     }
 
     public function artilheiros($id)
     {
-        $time = Time::find($id);
+        $time = Time::has('artilheiros')->find($id);
         if(!$time) {
             return '';
         }
