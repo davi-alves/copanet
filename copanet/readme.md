@@ -1,4 +1,9 @@
-laravel-study
-=============
+# Projeto: NF - Copanet
 
-Project for study proporses using Laravel 4 Framework
+
+## Equipe
+**Index Comunicação Digital**
+
+* Programação: Davi Alves (davi.alves@indexdigital.com.br)
+* HTML & CSS: Márcio Costa (marcio.costa@indexdigital.com.br)
+* Layout:
