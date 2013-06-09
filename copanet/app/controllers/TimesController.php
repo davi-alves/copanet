@@ -14,7 +14,7 @@ class TimesController extends BaseController
     {
         return View::make('times.index')->with(array(
             'entities' => Time::all(),
-            'departamentos' => $this->getDepartamentoSelect(),
+            'departamentos' => $this->getDepartamentoSelect(true),
             'title' => $this->title
         ));
     }
@@ -159,11 +159,16 @@ class TimesController extends BaseController
 
     /**
      * Get departamentos select array
+     * @param bool $filtered
      * @return array
      */
-    protected function getDepartamentoSelect()
+    protected function getDepartamentoSelect($filtered = false)
     {
-        $departamentos = Departamento::all();
+        if (!$filtered) {
+            $departamentos = Departamento::all();
+        } else {
+            $departamentos = Departamento::has('times')->get();
+        }
         $select = array(0 => 'Todos');
         foreach ($departamentos as $departamento) {
             $select[$departamento->id] = $departamento->nome;
