@@ -20,7 +20,7 @@
 
     <title>Copanet</title>
 
-    {{ HTML::style('assets/css/frontend/style.css') }}
+    {{ HTML::style('assets/css/frontend/style.min.css') }}
     {{ HTML::script('assets/js/libs/modernizr.custom.86827.js') }}
 
 </head>

@@ -1,6 +1,6 @@
 <tr>
   <td>{{ $entity->nome }}</td>
-  <td>{{ $entity->time->nome }}</td>
+  <td>{{ ($entity->time) ? $entity->time->nome : 'Sem Time' }}</td>
   <td>
     {{ link_to_route('admin.gol.edit', (($entity->gols) ? " {$entity->gols->gols}" : " 0"),
       array('artilheiro' => $entity->id), array('class' => 'btn btn-edit-gols', 'onclick' => 'return false;')) }}

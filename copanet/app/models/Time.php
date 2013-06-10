@@ -38,11 +38,10 @@ class Time extends Base
     public static function getTimesWithGolsByDepartamento($departamento)
     {
         $times = DB::table('times')
-            ->join('gols', 'times.id', '=', 'gols.time_id')
-            ->select('times.*', 'gols.gols')
+            ->join('gols', 'times.id', '=', 'gols.time_id', 'left')
+            ->select('times.*', DB::raw('IF(copanet_gols.gols, copanet_gols.gols, 0) as gols'))
             ->where('times.departamento_id', $departamento)
-            ->where('gols.gols', '>', '0')
-            ->orderBy('gols.gols', 'ASC')->get();
+            ->orderBy('gols', 'DESC')->get();
 
         return $times ? $times : array();
     }

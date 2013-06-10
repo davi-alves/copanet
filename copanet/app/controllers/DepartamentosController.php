@@ -118,6 +118,12 @@ class DepartamentosController extends BaseController
                     'message' => 'Departamento não encontrado',
             ));
         }
+        if($entity->times()->count() > 0) {
+            return Response::json(array(
+                    'success' => false,
+                    'message' => 'Departamento não pode ser removido, pois possui times.',
+            ));
+        }
 
         if(!$entity->delete()) {
             return Response::json(array(

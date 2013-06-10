@@ -11,19 +11,20 @@
                 <?php $i = 0; ?>
                 @foreach($departamentos as $departamento)
                     <?php $artilheiro = Artilheiro::getArtilheiroFromDepartamento($departamento->id) ?>
-                    <?php if(!$artilheiro): continue; endif; ?>
                     <?php $i++ ?>
                     <div class="box span6 @if($i != 0 && $i % 2 != 0) nomg @endif">
 
-                        <!-- Artilheiro -->
-                        <div class="artilheiro">
-                            <p>artilheiro da vez</p>
-                            <p class="name">{{ $artilheiro->nome }} <span>{{ $artilheiro->gols }} gols</span></p>
-                            @if($artilheiro->foto)
-                                <?php $foto = Resize::make($artilheiro->foto, 82, 83) ?>
-                                <div class="img pull-right"><img class="img-circle" src="{{ url($foto) }}" alt="scarlett"/></div>
-                            @endif
-                        </div> <!-- /Artilheiro -->
+                        @if($artilheiro)
+                            <!-- Artilheiro -->
+                            <div class="artilheiro">
+                                <p>artilheiro da vez</p>
+                                <p class="name">{{ $artilheiro->nome }} <span>{{ $artilheiro->gols }} gols</span></p>
+                                @if($artilheiro->foto)
+                                    <?php $foto = Resize::make($artilheiro->foto, 82, 83) ?>
+                                    <div class="img pull-right"><img class="img-circle" src="{{ url($foto) }}" alt="scarlett"/></div>
+                                @endif
+                            </div> <!-- /Artilheiro -->
+                        @endif
 
                         <!-- Departamento -->
                         <div class="departamento">
@@ -41,12 +42,12 @@
                                 <ul>
                                     @foreach($times as $time)
                                         <li>
-                                            <p>{{ $time->nome}} <span>{{ $time->gols }} gols</span></p>
+                                            <p>{{ $time->nome}} <span>{{ (int) $time->gols }} gols</span></p>
                                         </li>
                                     @endforeach
                                 </ul>
                             </div>
-                        @endif;<!-- /Times -->
+                        @endif<!-- /Times -->
 
                     </div>
 

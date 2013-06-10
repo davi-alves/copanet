@@ -34,7 +34,7 @@ class Artilheiro extends Base
             ->join('gols', 'gols.artilheiro_id', '=', 'artilheiros.id')
             ->where('times.departamento_id', $departamento)
             ->where('gols.gols', '>', '0')
-            ->groupBy('times.id')
+            ->groupBy('artilheiros.id')
             ->orderBy('gols.gols', 'DESC')
             ->orderBy('artilheiros.nome', 'ASC')->first();
 

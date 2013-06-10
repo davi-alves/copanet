@@ -144,6 +144,12 @@ class TimesController extends BaseController
                     'message' => 'Time não encontrado',
             ));
         }
+        if($entity->artilheiros()->count() > 0) {
+            return Response::json(array(
+                    'success' => false,
+                    'message' => 'Time não pode ser removido, pois possui artilheiros.',
+            ));
+        }
 
         if(!$entity->delete()) {
             return Response::json(array(

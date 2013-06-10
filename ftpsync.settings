@@ -1,0 +1,9 @@
+{
+  "default": {
+      "host": "187.18.187.52",
+      "username": "netfortaleza",
+      "password": "n3tf0rt@l3z@#",
+      "path": "/var/www/sites/netfortaleza",
+      "upload_on_save": false
+  }
+}
