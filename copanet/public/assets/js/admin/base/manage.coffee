@@ -27,6 +27,8 @@ define ['jquery', 'index', 'holder', 'jquery.migrate', 'blockUI', 'fancybox', 'f
       __cancelCropButton = '.btn-cancel-crop'
       __cropForm = 'form.crop-form'
       __cropImage = 'img.jcrop-image'
+      #- gols
+      __golsButton = '.btn-edit-gols'
 
       getForm = (target, action) ->
         $.ajax(
@@ -47,12 +49,13 @@ define ['jquery', 'index', 'holder', 'jquery.migrate', 'blockUI', 'fancybox', 'f
             $(@).remove('.modal')
 
           image = $(__formModal).find(__fileUploadThumbnail)
-          if image.length > 0 && image.attr('src') == undefined
-            Holder.run(
-              images: $(__formModal).find(__fileUploadThumbnail)[0]
-            )
+          if image.length > 0
+            _triggerFileUpload()
+            if image.attr('src') == undefined
+              Holder.run(
+                images: $(__formModal).find(__fileUploadThumbnail)[0]
+              )
 
-          _triggerFileUpload()
           _triggerAjaxForm()
         ).always(->
           Index.uiBlocker()
@@ -212,6 +215,10 @@ define ['jquery', 'index', 'holder', 'jquery.migrate', 'blockUI', 'fancybox', 'f
         $(__deleteButton).live 'click', (event) ->
           event.preventDefault()
           confirmDelete $(@)
+
+        $(__golsButton).live 'click', ->
+          event.preventDefault()
+          getForm $(@), 'gols'
 
         $(__saveButton).live 'click', (event) ->
           $(__formModal).find(__formElement).submit()

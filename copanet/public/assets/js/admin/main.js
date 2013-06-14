@@ -35,4 +35,4 @@ require.config({
     }
 });
 
-require(['admin/artilheiros/artilheiros', 'admin/gols/gols', 'admin/times/times']);
+require(['admin/artilheiros/artilheiros', 'admin/times/times']);

@@ -16,6 +16,13 @@
           {{ Form::text('nome', null, array( 'class' => 'input-xlarge')) }}
         </div>
       </div>
+      <div class="control-group">
+        {{ Form::label('artilheiro', 'É Artilheiro?', array('class' => 'control-label')) }}
+
+        <div class="controls">
+          {{ Form::checkbox('artilheiro', 1) }}
+        </div>
+      </div>
     </div>
     <div class="item">
       <div class="control-group">

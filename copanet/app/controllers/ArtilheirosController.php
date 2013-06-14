@@ -140,7 +140,6 @@ class ArtilheirosController extends BaseController
             ));
         }
 
-        $this->updateGols($entity, $time);
         $entity->fill(Input::all());
         if(!$entity->save()){
             return Response::json(array(
@@ -170,7 +169,6 @@ class ArtilheirosController extends BaseController
             ));
         }
 
-        $this->updateGols($entity, null, true);
         if(!$entity->delete()) {
             return Response::json(array(
                     'success' => false,
@@ -180,6 +178,34 @@ class ArtilheirosController extends BaseController
 
         return Response::json(array(
                 'success' => true,
+        ));
+    }
+
+    public function gols($id)
+    {
+        $entity = Artilheiro::find($id);
+        if (!$entity) {
+            App::abort('Artilheiro não encontrado', 404);
+        }
+
+        return View::make('gols.form')->with(array(
+            'entity' => $entity,
+            'route' => array('admin.artilheiro.gols.save', $entity->id)
+        ));
+    }
+
+    public function golsSave($id)
+    {
+        $entity = Artilheiro::find($id);
+        if (!$entity) {
+            App::abort('Artilheiro não encontrado', 404);
+        }
+
+        $entity->gols = Input::get('gols', (int) $entity->gols);
+        $entity->save();
+
+        return Response::json(array(
+            'success' => true
         ));
     }
 
@@ -266,76 +292,6 @@ class ArtilheirosController extends BaseController
         }
 
         return $imageResource;
-    }
-
-    /**
-     * Atualiza o saldo de gols do time e departamento durante a
-     *     atualização ou remoção do artilheiro
-     * @param  Artilheiro $artilheiro
-     * @param  Time $newTime
-     * @return null|void
-     */
-    public function updateGols($artilheiro, $newTime = null)
-    {
-        // se o artilheiro não tiver time e nem for passado um novo time retorna
-        if (!$artilheiro->time && !$newTime) {
-            return;
-        }
-
-        // se o artilheiro não tiver gols retorna
-        $gols = $artilheiro->gols->gols;
-        if ($gols == 0) {
-            return;
-        }
-
-        // se o artilheiro tiver time, remove os gols do time antigo
-        if ($artilheiro->time) {
-            $golsOldTime = Gol::getGols(null, $artilheiro->time_id);
-            if($golsOldTime) {
-                $golsOldTime->gols -= $gols;
-                if($golsOldTime->gols < 0) {
-                    $golsOldTime->gols = 0;
-                }
-                $golsOldTime->save();
-            }
-
-            // se o time tiver departamento, remove os gols do departamento
-            if ($artilheiro->time->departamento) {
-                $golsOldDepartamento = Gol::getGols(null, null, $artilheiro->time->departamento_id);
-                if($golsOldDepartamento) {
-                    $golsOldDepartamento->gols -= $gols;
-                    if($golsOldDepartamento->gols < 0) {
-                        $golsOldDepartamento->gols = 0;
-                    }
-                    $golsOldDepartamento->save();
-                }
-            }
-        }
-
-        // se o novo time não for informado ou o novo tive form o mesmo do anterior retorna
-        if (!$newTime || ($artilheiro->time && $artilheiro->time_id == $newTime->id)) {
-            return;
-        }
-
-        // adiciona os gols do artilheiro ao novo time
-        $golsNewTime = Gol::getGols(null, $newTime->id);
-        if (!$golsNewTime) {
-            $golsNewTime = new Gol(array('time_id' => $newTime->id, 'gols' => 0));
-        }
-        $golsNewTime->gols += $gols;
-        $golsNewTime->save();
-
-        // se o novo departamento for o mesmo do anterior retorna
-        if ($artilheiro->time->departamento_id == $newTime->departamento_id) {
-            return;
-        }
-
-        $golsNewDepartamento = Gol::getGols(null, null, $newTime->departamento_id);
-        if (!$golsNewDepartamento) {
-            $golsNewDepartamento = new Gol(array('departamento_id' => $newTime->departamento_id, 'gols' => 0));
-        }
-        $golsNewDepartamento->gols += $gols;
-        $golsNewDepartamento->save();
     }
 
 }

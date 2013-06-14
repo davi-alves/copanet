@@ -17,8 +17,9 @@
   <table class="table">
     <thead>
       <tr>
-        <th width="40%">Nome</th>
-        <th width="30%">Time</th>
+        <th>Nome</th>
+        <th>Time</th>
+        <th width="10%">É Artilheiro?</th>
         <th width="5%">Gols</th>
         <th>&nbsp;</th>
       </tr>
@@ -30,7 +31,7 @@
           @endforeach
         @else
           <tr>
-            <td colspan="4">Nenhum artilheiro cadastrado.</td>
+            <td colspan="5">Nenhum artilheiro cadastrado.</td>
           </tr>
         @endif
     </tbody>

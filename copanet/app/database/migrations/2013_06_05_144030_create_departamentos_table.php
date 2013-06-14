@@ -17,6 +17,7 @@ class CreateDepartamentosTable extends Migration {
             $table->increments('id');
             $table->string('nome', 100);
             $table->string('slug')->unique();
+            $table->integer('gols')->default(0);
         });
     }
 

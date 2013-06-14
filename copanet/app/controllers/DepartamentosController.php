@@ -137,4 +137,32 @@ class DepartamentosController extends BaseController
         ));
     }
 
+    public function gols($id)
+    {
+        $entity = Departamento::find($id);
+        if (!$entity) {
+            App::abort('Departamento não encontrado', 404);
+        }
+
+        return View::make('gols.form')->with(array(
+            'entity' => $entity,
+            'route' => array('admin.departamento.gols.save', $entity->id)
+        ));
+    }
+
+    public function golsSave($id)
+    {
+        $entity = Departamento::find($id);
+        if (!$entity) {
+            App::abort('Departamento não encontrado', 404);
+        }
+
+        $entity->gols = Input::get('gols', (int) $entity->gols);
+        $entity->save();
+
+        return Response::json(array(
+            'success' => true
+        ));
+    }
+
 }

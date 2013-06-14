@@ -18,6 +18,8 @@ class CreateArtilheirosTable extends Migration
             $table->string('nome', 150);
             $table->string('foto')->nullable();
             $table->integer('time_id');
+            $table->boolean('artilheiro')->default(0);
+            $table->integer('gols')->default(0);
         });
     }
 

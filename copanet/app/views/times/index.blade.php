@@ -12,8 +12,9 @@
   <table class="table">
     <thead>
       <tr>
-        <th width="40%">Nome do Time</th>
-        <th width="40%">Departamento</th>
+        <th>Nome do Time</th>
+        <th>Departamento</th>
+        <th width="5%">Gols</th>
         <th>&nbsp;</th>
       </tr>
     </thead>
@@ -24,7 +25,7 @@
           @endforeach
         @else
           <tr>
-            <td colspan="3">Nenhum time cadastrado.</td>
+            <td colspan="4">Nenhum time cadastrado.</td>
           </tr>
         @endif
     </tbody>

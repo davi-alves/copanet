@@ -163,6 +163,34 @@ class TimesController extends BaseController
         ));
     }
 
+    public function gols($id)
+    {
+        $entity = Time::find($id);
+        if (!$entity) {
+            App::abort('Time não encontrado', 404);
+        }
+
+        return View::make('gols.form')->with(array(
+            'entity' => $entity,
+            'route' => array('admin.time.gols.save', $entity->id)
+        ));
+    }
+
+    public function golsSave($id)
+    {
+        $entity = Time::find($id);
+        if (!$entity) {
+            App::abort('Time não encontrado', 404);
+        }
+
+        $entity->gols = Input::get('gols', (int) $entity->gols);
+        $entity->save();
+
+        return Response::json(array(
+            'success' => true
+        ));
+    }
+
     /**
      * Get departamentos select array
      * @param bool $filtered

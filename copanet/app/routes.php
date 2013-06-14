@@ -66,20 +66,19 @@ Route::group(array('before' => 'auth', 'prefix' => 'admin'), function () {
     Route::resource('posts', 'PostsController');
     /** Departamento Resource */
     Route::resource('departamento', 'DepartamentosController', array('except' => array('show')));
+    Route::get('departamento/{departamento}/gols', array('as' => 'admin.departamento.gols', 'uses' => 'DepartamentosController@gols'));
+    Route::post('departamento/{departamento}/gols', array('as' => 'admin.departamento.gols.save', 'uses' => 'DepartamentosController@golsSave'));
     /** Times Resource */
     Route::resource('time', 'TimesController', array('except' => array('show')));
     Route::get('time/departamento/{departamento}', array('as' => 'admin.time.departamento', 'uses' => 'TimesController@departamento'));
+    Route::get('time/{time}/gols', array('as' => 'admin.time.gols', 'uses' => 'TimesController@gols'));
+    Route::post('time/{time}/gols', array('as' => 'admin.time.gols.save', 'uses' => 'TimesController@golsSave'));
     /** Artilheiro Resource */
     Route::resource('artilheiro', 'ArtilheirosController', array('except' => array('show')));
     Route::get('artilheiro/time/{time}', array('as' => 'admin.artilheiro.time', 'uses' => 'ArtilheirosController@time'));
     Route::post('artilheiro/foto', array('as' => 'admin.artilheiro.foto', 'uses' => 'ArtilheirosController@foto'));
-    /** Gol Routes */
-    Route::get('gol', array('as' => 'admin.gol.create', 'uses' => 'GolsController@add'));
-    Route::get('gol/{artilheiro}', array('as' => 'admin.gol.edit', 'uses' => 'GolsController@edit'));
-    Route::post('gol', array('as' => 'admin.gol.store', 'uses' => 'GolsController@save'));
-    Route::get('gol/times/{departamento}', array('as' => 'admin.gol.times', 'uses' => 'GolsController@times'));
-    Route::get('gol/artilheiros/{time}', array('as' => 'admin.gol.artilheiros', 'uses' => 'GolsController@artilheiros'));
-    Route::get('gol/total/{artilheiro}', array('as' => 'admin.gol.total', 'uses' => 'GolsController@gols'));
+    Route::get('artilheiro/{artilheiro}/gols', array('as' => 'admin.artilheiro.gols', 'uses' => 'ArtilheirosController@gols'));
+    Route::post('artilheiro/{artilheiro}/gols', array('as' => 'admin.artilheiro.gols.save', 'uses' => 'ArtilheirosController@golsSave'));
 
     /** Admin Dashboard */
     Route::get('dashboard', array('as' => 'dashboard', function ()

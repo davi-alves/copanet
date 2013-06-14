@@ -29,14 +29,14 @@
                         <!-- Departamento -->
                         <div class="departamento">
                             <div class="gols">
-                                <p><strong>{{ ($departamento->gols) ? $departamento->gols->gols : 0 }}</strong>gols</p>
+                                <p><strong>{{ $departamento->gols }}</strong>gols</p>
                                 <div class="carret"></div>
                             </div>
                             <p>{{ $departamento->nome }}</p>
                         </div><!-- /Departamento -->
 
                         <!-- Times -->
-                        <?php $times = Time::getTimesWithGolsByDepartamento($departamento->id) ?>
+                        <?php $times = Time::getTimesByDepartamento($departamento->id) ?>
                         @if(!empty($times))
                             <div class="times">
                                 <ul>

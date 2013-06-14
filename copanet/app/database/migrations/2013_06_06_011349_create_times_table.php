@@ -17,6 +17,7 @@ class CreateTimesTable extends Migration {
             $table->string('nome', 100);
             $table->string('slug')->unique();
             $table->integer('departamento_id')->index();
+            $table->integer('gols')->default(0);
             #$table->foreign('departamento_id')->references('id')->on('departamentos');
         });
     }
